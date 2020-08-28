@@ -1,0 +1,41 @@
+<div>
+    <h2 id="sale-page-heading">
+        <span>Sales</span>
+        <button id="new-sale-btn" class="btn btn-primary float-right" [routerLink]="['sale/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span>
+            New Sale
+          </span>
+        </button>
+    </h2>
+    <br/>
+    <div class="table-responsive" *ngIf="sales">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>ID</span></th>
+                <th><span>Description</span></th>
+                <th><span>Client</span></th>
+                <th><span>Total</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sale of sales | orderBy : ['id']; trackBy: trackId">
+                <td>{{sale.id}}</td>
+                <td>{{sale.description}}</td>
+                <td>{{sale.client?.id}}</td>
+                <td>{{sale.total}}</td>
+              <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                  <button type="button" (click)="deleteSale(sale)" class="btn btn-danger btn-sm">
+                    <fa-icon [icon]="'times'"></fa-icon>
+                    <span class="d-none d-md-inline"> Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

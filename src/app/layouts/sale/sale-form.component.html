@@ -1,0 +1,69 @@
+<h2>Sale</h2>
+<form name="editForm" role="form" novalidate #editForm="ngForm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-control-label" for="saleDescriptionInput">Description</label>
+                <input type="text" class="form-control" name="saleDescriptionInput" id="saleDescriptionInput" [(ngModel)]="sale.description" placeholder="" required/>
+                <div [hidden]="!(editForm.controls.saleDescriptionInput?.dirty && editForm.controls.saleDescriptionInput?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.saleDescriptionInput?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h3 id = "Clientes">
+      <span>Cliente</span>
+    </h3>
+    <select class="form-control" [(ngModel)]="sale.client" name="ClienteSelect" id="ClienteSelect">
+      <option *ngFor="let p of clients" [value]="p.id">{{p.firstName+" "+p.lastName}}</option>
+    </select>
+    <h4 id = "teste">
+      <span>Lista de Produtos</span>
+    </h4>
+    <select class="form-control" [(ngModel)]="productSelection" name="productSelectInput" id="productSelectInput">
+      <option *ngFor="let p of products" [value]="p.id">{{p.productName}} - {{p.price}}€</option>
+    </select>
+    <h5 id="product-teste">
+      <button id="new-list-btn" class="btn btn-primary float-right" (click)="addProductList()">
+        <fa-icon [icon]="'plus'"></fa-icon>
+        <span>
+          New Line Product
+        </span>
+      </button>
+    </h5>
+  <div class="table-responsive" *ngIf="sale.products">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><span>ID</span></th>
+        <th><span>Product Name</span></th>
+        <th><span>Price</span></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of sale.products; let i = index; trackBy: trackId">
+          <td>{{product.id}}</td>
+          <td>{{product.productName}}</td>
+          <td>{{product.price}}</td>
+          <td class="text-right">
+            <div class="btn-group flex-btn-group-container">
+              <button type="button" class="btn btn-danger btn-sm" (click)="deleteProductPrecaution(product)">
+                <fa-icon [icon]="'times'"></fa-icon>
+                <span class="d-none d-md-inline"> Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Sum: {{ sale.total }}</p>
+  <button type="button" class="btn btn-primary" [disabled]="editForm.form.invalid" (click)="saveSale()">
+    <fa-icon [icon]="'save'"></fa-icon>
+    <span> Save</span>
+  </button>
+</form>
